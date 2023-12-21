@@ -287,6 +287,41 @@ request.getLocalPort() = 8080
 - body 없이 쿼리 파라미터에 데이터 포함해서 전달
 - ex. 검색, 필터, 페이징등에서 많이 사용하는 방식
 
+```shell
+# 요청 URL
+http://localhost:8080/request-param?username=name1&username=name100
+```
+
+```java
+System.out.println("[전체 쿼리 파라미터 조회] - start");
+
+System.out.println("@방법 1 - name 으로 조회");
+request.getParameterNames().asIterator().forEachRemaining(paramName ->
+        System.out.println("paramName = " + paramName + ":" + request.getParameter(paramName)));
+
+System.out.println("@방법 2 - name 에 대응되는 값이 여러개인 경우");
+// http://localhost:8080/request-param?username=name1&username=name100
+String key = "username";
+String[] usernames = request.getParameterValues(key);
+for (String username : usernames) {
+    System.out.println("username = " + username);
+}
+
+System.out.println("[전체 쿼리 파라미터 조회] - end");
+
+response.getWriter().write("OK");
+```
+
+```shell
+[전체 쿼리 파라미터 조회] - start
+@방법 1 - name 으로 조회
+paramName = username:name1
+@방법 2 - name 에 대응되는 값이 여러개인 경우
+username = name1
+username = name100
+[전체 쿼리 파라미터 조회] - end
+```
+
 ### 2. HTML Form (ex. POST)
 - `content-type: application/x-www-form-urlencoded`
 - body 에 쿼리 파라미터 형식으로 전달
@@ -295,3 +330,5 @@ request.getLocalPort() = 8080
 ### 3. HTTP message body 에 데이터를 직접 담아서 요청 
 - HTTP API 에서 주로 사용 
 - 데이터 형식으로는 주로 JSON 사용 (JSON, XML, TEXT 등) 
+
+## 2.7 파라미터 출력 
