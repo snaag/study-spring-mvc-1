@@ -59,7 +59,7 @@ response.setCharacterEncoding("utf-8"); // 인코딩 정보, 옛날 시스템이
 response.getWriter().write("hello " + username); // body 에 담아서 보내줌
 ```
 
-## 2.3 로깅
+## 2.4 로깅
 ```shell
 logging.level.org.apache.coyote.http11=debug
 ```
@@ -94,7 +94,7 @@ request = org.apache.catalina.connector.RequestFacade@73fefc15
 response = org.apache.catalina.connector.ResponseFacade@1be14b67
 ```
 
-## 2.4 HTTP 메시지 출력
+## 2.5 HTTP 메시지 출력
 ### 메시지 출력 
 ```java
 private static void printStartLine(HttpServletRequest request) {
@@ -278,3 +278,18 @@ request.getLocalAddr() = 0:0:0:0:0:0:0:1
 request.getLocalPort() = 8080
 --- 기타 조회 end ---
 ```
+
+## 2.6 HTML 요청 데이터
+- HTTP 요청 메시지를 통해 `클라이언트 -> 서버` 로 데이터를 전달하는 방법에는 **주로 3가지** 가 있다
+### 1. 쿼리 파라미터 (ex. GET)
+- body 없이 쿼리 파라미터에 데이터 포함해서 전달
+- ex. 검색, 필터, 페이징등에서 많이 사용하는 방식
+
+### 2. HTML Form (ex. POST)
+- `content-type: application/x-www-form-urlencoded`
+- body 에 쿼리 파라미터 형식으로 전달
+- ex. 회원 가입, 상품 주문 등에서 HTML Form 의 형태로 사용
+
+### 3. HTTP message body 에 데이터를 직접 담아서 요청 
+- HTTP API 에서 주로 사용 
+- 데이터 형식으로는 주로 JSON 사용 (JSON, XML, TEXT 등) 
