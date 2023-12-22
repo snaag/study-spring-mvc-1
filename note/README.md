@@ -285,6 +285,7 @@ request.getLocalPort() = 8080
 
 ### 1. 쿼리 파라미터 (ex. GET)
 - body 없이 쿼리 파라미터에 데이터 포함해서 전달
+  - `getParameter()` 로 조회 가능
 - ex. 검색, 필터, 페이징등에서 많이 사용하는 방식
 
 ```shell
@@ -322,9 +323,28 @@ username = name100
 [전체 쿼리 파라미터 조회] - end
 ```
 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body> <ul>
+    <li><a href="basic.html">서블릿 basic</a></li> </ul>
+</body>
+</html>
+```
+
+<img width="470" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/06ad2e86-c14b-4536-8ed2-8d2596069992">
+
+<img width="1007" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/9308ce38-f58b-4217-a477-a8be13587d0f">
+
+
 ### 2. HTML Form (ex. POST)
 - `content-type: application/x-www-form-urlencoded`
 - body 에 쿼리 파라미터 형식으로 전달
+  - `getParameter()` 로 조회 가능 (1번과 동일)
 - ex. 회원 가입, 상품 주문 등에서 HTML Form 의 형태로 사용
 
 ### 3. HTTP message body 에 데이터를 직접 담아서 요청 
