@@ -346,9 +346,30 @@ username = name100
 - body 에 쿼리 파라미터 형식으로 전달
   - `getParameter()` 로 조회 가능 (1번과 동일)
 - ex. 회원 가입, 상품 주문 등에서 HTML Form 의 형태로 사용
+- (화면 예시는 1번과 동일)
 
 ### 3. HTTP message body 에 데이터를 직접 담아서 요청 
 - HTTP API 에서 주로 사용 
 - 데이터 형식으로는 주로 JSON 사용 (JSON, XML, TEXT 등) 
+  - 과거에는 XML 을 주로 사용했으나, **최근에는 JSON** 이 표준이 됨
+
+```java
+@WebServlet(name = "requestBodyStringServlet", urlPatterns = "/request-body-string")
+public class RequestBodyStringServlet extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // * body -> bytecode -> string
+        ServletInputStream inputStream = request.getInputStream(); // body 의 내용을 bytecode 로 얻을 수 있음 (body -> bytecode)
+        // ! 이 때 encoding 명시 필수
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8); // bytecode 를 string 으로 변환함 (bytecode -> string)
+
+        System.out.println("messageBody = " + messageBody);
+
+        response.getWriter().write("ok");
+    }
+}
+```
+
+<img width="1004" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/c10a4c09-ade6-4347-b24d-d36fe9f71a2d">
 
 ## 2.7 파라미터 출력 
