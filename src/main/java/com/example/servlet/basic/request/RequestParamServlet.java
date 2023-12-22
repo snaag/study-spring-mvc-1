@@ -30,8 +30,10 @@ public class RequestParamServlet extends HttpServlet {
         // http://localhost:8080/request-param?username=name1&username=name100
         String key = "username";
         String[] usernames = request.getParameterValues(key);
-        for (String username : usernames) {
-            System.out.println("username = " + username);
+        if(usernames != null) {
+            for (String username : usernames) {
+                System.out.println("username = " + username);
+            }
         }
 
         System.out.println("[전체 쿼리 파라미터 조회] - end");
