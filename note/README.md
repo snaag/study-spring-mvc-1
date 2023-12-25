@@ -372,4 +372,41 @@ public class RequestBodyStringServlet extends HttpServlet {
 
 <img width="1004" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/c10a4c09-ade6-4347-b24d-d36fe9f71a2d">
 
-## 2.7 파라미터 출력 
+## 2.8 JSON 으로 데이터 주고받기
+- 파싱을 위한 class 선언 필요
+
+```java
+@Getter @Setter
+public class HelloData {
+    private String username;
+    private int age;
+}
+```
+
+- Jackson 의 ObjectMapper 로 파싱
+```java
+// import com.fasterxml.jackson.databind.ObjectMapper;
+
+@WebServlet(name = "requestBodyJsonServlet", urlPatterns = "/request-body-json")
+public class RequestBodyJsonServlet extends HttpServlet {
+
+    // * Jackson -> SpringBoot 에서 제공하는 Json library
+    // * cf. Gson
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        System.out.println("messageBody = " + messageBody);
+        HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+
+        System.out.println("helloData.username = " + helloData.getUsername());
+        System.out.println("helloData.age = " + helloData.getAge());
+
+        response.getWriter().write("ok");
+    }
+}
+```
