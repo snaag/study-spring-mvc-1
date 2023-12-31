@@ -476,3 +476,30 @@ public class ResponseHeaderServlet extends HttpServlet {
   - `response.addCookie(cookie);`
 
 <img width="900" alt="스크린샷 2023-12-29 오후 7 50 41" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/f489d2bb-c715-4903-ba3f-7df8325f88ec">
+
+## 2.10 서블릿으로 HTML response 보내기
+- header 
+  - contentType 을 text/html 로 지정해야 함
+  - 한글로 보내려면 charset 도 utf-8 로 해주어야 함 
+- body
+  - writer.println("<html>"); 으로 보낼 수 있음 
+
+```java
+@WebServlet(name="responseHtmlServlet", urlPatterns = "/response-html")
+public class ResponseHtmlServlet extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Content-Type: text/html;charset=utf-8;
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("<html>");
+        writer.println("<body>");
+        writer.println("  <div>안녕</div>");
+        writer.println("</body>");
+        writer.println("</html>");
+    }
+}
+```
+<img width="900" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/732fb9ce-2dbd-4406-9526-225d2ce28e5b">
