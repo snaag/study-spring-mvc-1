@@ -410,3 +410,69 @@ public class RequestBodyJsonServlet extends HttpServlet {
     }
 }
 ```
+
+## 2.9 Header 보내기 
+```java
+@WebServlet(name = "responseHeaderServlet", urlPatterns = "/response-header")
+public class ResponseHeaderServlet extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // [status-line]
+        response.setStatus(HttpServletResponse.SC_OK); // 200
+
+        // [response-headers]
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // cache 무효화
+        response.setHeader("Pragma","no-cache"); // 과거 버전의 캐시도 없앤다
+        response.setHeader("my-header", "hello"); // 나의 커스텀 헤더
+
+        // [Header 편의 메서드]
+//        content(response);
+//        cookie(response);
+        redirect(response);
+
+        // [message body]
+        PrintWriter writer = response.getWriter();
+        writer.write("안녕");
+    }
+
+    private void content(HttpServletResponse response) {
+        // Content-Type: text/plain;charset=utf-8
+        // Content-Length: 2
+
+        // response.setHeader("Content-Type", "text/plain;charset=utf-8");
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("utf-8");
+    }
+
+    private void cookie(HttpServletResponse response) {
+        // response.setHeader("Set-Cookie", "myCookie=good; Max-Age=600");
+        Cookie cookie = new Cookie("myCookie", "good");
+        cookie.setMaxAge(600); // 600초 (이 cookie 는 600초 동안 유효하다)
+
+        response.addCookie(cookie);
+    }
+
+    private void redirect(HttpServletResponse response) throws IOException {
+        // Status Code 302
+        // Location: /basic/hello-form.html
+
+        // response.setStatus(HttpServletResponse.SC_FOUND); // 302
+        // response.setHeader("Location", "/basic/hello-form.html");
+        response.sendRedirect("/basic/hello-form.html");
+    }
+}
+```
+
+- header 에 값을 set 할 떄 (`response.setHeader("xx","yy");`)
+  - `response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");`
+  - `response.setHeader("Pragma","no-cache");`
+  - `response.setHeader("my-header", "hello");`
+- 특정 header 를 set 할 때 
+  - `리다이렉트` `response.sendRedirect("/basic/hello-form.html");`
+  - `content type` `response.setContentType("text/plain");`
+  - `content type` `response.setCharacterEncoding("utf-8");`
+- cookie 를 set 할 때
+  - `cookie.setMaxAge(600);`
+  - `response.addCookie(cookie);`
+
+<img width="900" alt="스크린샷 2023-12-29 오후 7 50 41" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/f489d2bb-c715-4903-ba3f-7df8325f88ec">
