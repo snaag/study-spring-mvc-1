@@ -372,7 +372,7 @@ public class RequestBodyStringServlet extends HttpServlet {
 
 <img width="1004" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/c10a4c09-ade6-4347-b24d-d36fe9f71a2d">
 
-## 2.8 JSON 으로 데이터 주고받기
+## 2.7 JSON 으로 데이터 주고받기
 - 파싱을 위한 class 선언 필요
 
 ```java
@@ -411,7 +411,7 @@ public class RequestBodyJsonServlet extends HttpServlet {
 }
 ```
 
-## 2.9 Header 보내기 
+## 2.8 Header 보내기 
 ```java
 @WebServlet(name = "responseHeaderServlet", urlPatterns = "/response-header")
 public class ResponseHeaderServlet extends HttpServlet {
@@ -477,7 +477,7 @@ public class ResponseHeaderServlet extends HttpServlet {
 
 <img width="900" alt="스크린샷 2023-12-29 오후 7 50 41" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/f489d2bb-c715-4903-ba3f-7df8325f88ec">
 
-## 2.10 서블릿으로 HTML response 보내기
+## 2.9 서블릿으로 HTML response 보내기
 - header 
   - contentType 을 text/html 로 지정해야 함
   - 한글로 보내려면 charset 도 utf-8 로 해주어야 함 
@@ -504,7 +504,7 @@ public class ResponseHtmlServlet extends HttpServlet {
 ```
 <img width="900" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/732fb9ce-2dbd-4406-9526-225d2ce28e5b">
 
-## 2.11 서블릿으로 JSON response 보내기
+## 2.10 서블릿으로 JSON response 보내기
 
 - header
   - contentType 을 application/json 으로 지정해야 함
