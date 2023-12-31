@@ -503,3 +503,49 @@ public class ResponseHtmlServlet extends HttpServlet {
 }
 ```
 <img width="900" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/732fb9ce-2dbd-4406-9526-225d2ce28e5b">
+
+## 2.11 서블릿으로 JSON response 보내기
+
+- header
+  - contentType 을 application/json 으로 지정해야 함
+    - **application/json 은 스펙상 utf-8 형식을 지원하도록 되어있어, charset=utf-8 같은 추가 파라미터 지원 X**
+- body
+  - ObjectMapper 를 사용하여 string 으로 변환해서 보내기 
+
+```java
+@WebServlet(name="responseJsonServlet", urlPatterns = "/response-json")
+public class ResponseJsonServlet extends HttpServlet {
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Content-Type: application/json; charset=utf-8
+
+        response.setContentType("application/json");
+        // response.setCharacterEncoding("utf-8"); // 안써도 됨 
+
+        // 1. 보낼 데이터 준비
+        HelloData helloData = new HelloData();
+        helloData.setUsername("kim");
+        helloData.setAge(20);
+
+        // 2. string 으로 보내기 (Jackson 의 ObjectMapper)
+        // {"username": "kim", "age": 20}
+        String result = objectMapper.writeValueAsString(helloData);
+        response.getWriter().write(result);
+    }
+}
+```
+
+<img width="900" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/c4a7acbd-6a4b-4e64-9321-7335c9a9cd44">
+
+### (추가) 만약 Spring MVC 를 사용한다면?
+```java
+HelloData helloData = new HelloData();
+helloData.setUsername("kim");
+return helloData.setAge(20);
+```
+
+**이렇게만 해줘도 된다!**
+
