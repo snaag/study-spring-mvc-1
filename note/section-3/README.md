@@ -261,3 +261,136 @@ public class MemberListServlet extends HttpServlet {
 }
 
 ```
+
+## 3.4 [JSP] 덜 불편하게 회원 정보에 대한 동적인 HTML 반환하기
+
+### 회원 정보 저장
+
+- 저장 Form 
+
+<img width="477" alt="스크린샷 2024-01-02 오전 2 49 58" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/a52eb5fd-8c33-4e30-8ae9-b3c0c3e675b5">
+
+```jsp
+<%-- JSP 라는 의미임 (이 줄이 꼭 있어야 됨) --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<form action="/jsp/members/save.jsp" method="post">
+    username: <input type="text" name="username">
+    age:      <input type="text" name="age">
+    <button type="submit">전송</button>
+</form>
+</body>
+</html>
+```
+
+- 저장 완료 페이지 
+
+<img width="430" alt="스크린샷 2024-01-02 오전 2 55 23" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/00f483e4-f554-4839-a9f1-c1764e2eccb4">
+
+```java
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- import --%>
+<%@ page import="com.example.servlet.domain.member.MemberRepository" %>
+<%@ page import="com.example.servlet.domain.member.Member" %>
+
+<%-- MemberSaveServlet 에 있던 로직 --%>
+<%
+  System.out.println("save.jsp");
+
+  MemberRepository memberRepository = MemberRepository.getInstance();
+  // request, response 는 다른 import, 선언 없이 사용 가능
+  String username = request.getParameter("username");
+  int age = Integer.parseInt(request.getParameter("age"));
+
+  Member member = new Member(username, age);
+  memberRepository.save(member);
+  System.out.println("member = " + member);
+%>
+<html>
+<head>
+  <title>Title</title>
+</head>
+<body>
+성공
+<ul>
+  <li>id=<%= member.getId() %></li>
+  <li>username=<%= member.getUsername() %></li>
+  <li>age=<%= member.getAge() %></li>
+</ul>
+<a href="/index.html">메인</a>
+</body>
+</html>
+```
+
+### 회원 목록 확인
+
+<img width="397" alt="스크린샷 2024-01-02 오전 2 58 34" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/27bb40f9-d2ba-452f-8acc-cedace56e821">
+
+```jsp
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.servlet.domain.member.MemberRepository" %>
+<%@ page import="com.example.servlet.domain.member.Member" %>
+<%@ page import="java.util.List" %>
+
+<%-- MemberListServlet 에 있던 로직 --%>
+<%
+    MemberRepository memberRepository = MemberRepository.getInstance();
+    List<Member> members = memberRepository.findAll();
+%>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<a href="/index.html">메인</a>
+<table>
+    <thead>
+    <th>id</th>
+    <th>username</th>
+    <th>age</th>
+    </thead>
+    <tbody>
+    <%
+        for (Member member : members) {
+            out.write("<tr>\n");
+            out.write("  <td>" + member.getId() + "</td>\n");
+            out.write("  <td>" + member.getUsername() + "</td>\n");
+            out.write("  <td>" + member.getAge() + "</td>\n");
+            out.write("</tr>\n");
+        }
+    %>
+    </tbody>
+</table>
+</body>
+</html>
+```
+
+### JSP 사용 방법 
+- 경로
+  - webapp/jsp
+  - `http://localhost:8080/jsp/xx.jsp`
+- JSP 문법
+  - JSP 사용 선언
+    - `<%@ page contentType="text/html;charset=UTF-8" language="java" %>`
+  - import
+    - `<%@ page import="com.example.servlet.domain.member.MemberRepository" %>`
+  - Java 코드 사용
+    - `<% ... %>`
+
+  
+### 그럼에도 불편한... JSP 의 한계
+- 코드가 지저분하고 복잡해짐 
+  - 화면을 보여주는 부분 (view) 과 비즈니스 로직을 처리하는 부분이 한 페이지에 있어 **번거로움**
+- 작업의 어려움 
+  - 하나의 파일에 화면과 비즈니스 로직이 있으므로, 커밋 시 충돌도 잘 발생함
+  - 유지보수도 어려워짐 
+
+### 보다 개선된 MVC (Model, View, Controller) 패턴 
+- 화면을 보여주는 로직, 비즈니스 로직을 분리하도록 함  
+- 기존 프로젝트의 개선 방법 
+  - Servlet 에서 비즈니스 로직을 돌리도록 함
+  - JSP 에서 화면을 그리도록 함 
