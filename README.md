@@ -21,3 +21,5 @@
 - 3.2 Member Create, Retrieve 구현 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#32-member-create-retrieve-%EA%B5%AC%ED%98%84)
 - 3.3 [Servlet] 불편하게 회원 정보에 대한 동적인 HTML 반환하기 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#33-servlet-%EB%B6%88%ED%8E%B8%ED%95%98%EA%B2%8C-%ED%9A%8C%EC%9B%90-%EC%A0%95%EB%B3%B4%EC%97%90-%EB%8C%80%ED%95%9C-%EB%8F%99%EC%A0%81%EC%9D%B8-html-%EB%B0%98%ED%99%98%ED%95%98%EA%B8%B0)
 - 3.4 [JSP] 덜 불편하게 회원 정보에 대한 동적인 HTML 반환하기 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#34-jsp-%EB%8D%9C-%EB%B6%88%ED%8E%B8%ED%95%98%EA%B2%8C-%ED%9A%8C%EC%9B%90-%EC%A0%95%EB%B3%B4%EC%97%90-%EB%8C%80%ED%95%9C-%EB%8F%99%EC%A0%81%EC%9D%B8-html-%EB%B0%98%ED%99%98%ED%95%98%EA%B8%B0)
+- 3.5 MVC 패턴 개요 [이동](https://github.com/snaag/study-spring-mvc-1/tree/main/note/section-3#35-mvc-%ED%8C%A8%ED%84%B4-%EA%B0%9C%EC%9A%94)
+- 3.6 MVC 패턴 적용 [이동](https://github.com/snaag/study-spring-mvc-1/tree/main/note/section-3#36-mvc-%ED%8C%A8%ED%84%B4-%EC%A0%81%EC%9A%A9)
