@@ -16,3 +16,8 @@
 - 2.9 서블릿으로 HTML response 보내기 [이동](https://github.com/snaag/study-spring-mvc-1/tree/main/note/section-2#29-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%9C%BC%EB%A1%9C-html-response-%EB%B3%B4%EB%82%B4%EA%B8%B0)
 - 2.10 서블릿으로 JSON response 보내기 [이동](https://github.com/snaag/study-spring-mvc-1/tree/main/note/section-2#210-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%9C%BC%EB%A1%9C-json-response-%EB%B3%B4%EB%82%B4%EA%B8%B0)
 
+### 섹션3. 서블릿, JSP, MVC 패턴 [(이동)](https://github.com/snaag/study-spring-mvc-1/tree/main/note/section-3)
+- 3.1 회원가입 웹 애플리케이션 요구사항 안내 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#31-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EC%9B%B9-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EC%95%88%EB%82%B4)
+- 3.2 Member Create, Retrieve 구현 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#32-member-create-retrieve-%EA%B5%AC%ED%98%84)
+- 3.3 [Servlet] 불편하게 회원 정보에 대한 동적인 HTML 반환하기 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#33-servlet-%EB%B6%88%ED%8E%B8%ED%95%98%EA%B2%8C-%ED%9A%8C%EC%9B%90-%EC%A0%95%EB%B3%B4%EC%97%90-%EB%8C%80%ED%95%9C-%EB%8F%99%EC%A0%81%EC%9D%B8-html-%EB%B0%98%ED%99%98%ED%95%98%EA%B8%B0)
+- 3.4 [JSP] 덜 불편하게 회원 정보에 대한 동적인 HTML 반환하기 [이동](https://github.com/snaag/study-spring-mvc-1/blob/main/note/section-3/README.md#34-jsp-%EB%8D%9C-%EB%B6%88%ED%8E%B8%ED%95%98%EA%B2%8C-%ED%9A%8C%EC%9B%90-%EC%A0%95%EB%B3%B4%EC%97%90-%EB%8C%80%ED%95%9C-%EB%8F%99%EC%A0%81%EC%9D%B8-html-%EB%B0%98%ED%99%98%ED%95%98%EA%B8%B0)
