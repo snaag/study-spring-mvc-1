@@ -441,4 +441,33 @@ public class MemberListServlet extends HttpServlet {
   - 컨트롤러에서 문제가 없었다면, 여기서(서비스, 리포지토리) 비즈니스 로직, 데이터 접근을 처리함 
   - _(1) 에서는 Controller 가 비즈니스 로직도 담당하고 있음_
 - 컨트롤러와 비즈니스 로직 
-  - 비즈니스 로직을 변경하면 비즈니스 로직을 호출하는 컨트롤 러의 코드도 변경될 수 있음  
+  - 비즈니스 로직을 변경하면 비즈니스 로직을 호출하는 컨트롤 러의 코드도 변경될 수 있음
+
+## 3.6 MVC 패턴 적용  
+
+- WEB-INF 디렉토리
+  - WAS Server 의 convention
+  - 외부에서 바로 호출되지 않음
+    - controller 를 거쳐 내부에서 forward 해야만 호출됨 
+    - 따라서 jsp 파일을 외부에서 직접적으로 부르지 않았으면 좋겠을 때 사용함 
+
+```java
+RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
+dispatcher.forward(request, response); // 내부적으로, 서버에서 servlet -> JSP 호출
+```
+
+- redirect vs. forward
+  - redirect (Server -> Client -> Server)
+    - 리다이렉트는 실제 클라이언트(웹 브라우저)에 응답이 나갔다가, 클라이언트가 redirect 경로로 다시 요청하는 것
+    - 따라서 클라이언트가 인지할 수 있고, URL 경로도 실제로 변경됨 
+  - forward (Server -> Server)
+    - 반면에 포워드는 서버 내부에서 일어나는 호출이기 때문에 클라이언트가 전혀 인지하지 못함 
+
+### 회원 정보 저장
+
+- 저장 Form
+
+<img width="481" alt="스크린샷 2024-01-02 오전 5 07 44" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/df368d39-4d4b-4f4a-ad7e-30e71d075bf1">
+
+<img width="424" alt="스크린샷 2024-01-02 오전 5 10 24" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/936f6b16-7028-4e60-bdc9-6f3fa1143316">
+
