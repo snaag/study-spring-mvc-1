@@ -128,3 +128,136 @@ class MemberRepositoryTest {
     }
 }
 ```
+
+## 3.3 [Servlet] 불편하게 회원 정보에 대한 동적인 HTML 반환하기
+- Servlet 을 사용하여 동적인 HTML 을 client 에게 줄 수 있음
+- 그러나 Servlet 에서 HTML 을 작성하는 것은 너무 불편하다! -> **템플릿엔진 (JSP `next!`, Thymeleaf 등) 사용**  
+
+### 회원 정보 저장
+- 저장 Form 
+
+<img width="608" alt="image" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/7638425b-6cdd-4cd7-a2d7-1d96aa09612b">
+
+```java
+@WebServlet(name = "memberFormServlet", urlPatterns = "/servlet/members/new-form")
+public class MemberFormServlet extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+
+        PrintWriter writer = response.getWriter();
+        writer.write("""
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Title</title>
+                </head>
+                <body>
+                <form action="/servlet/members/save" method="post">
+                    username: <input type="text" name="username" />
+                    age:      <input type="text" name="age" />
+                 <button type="submit">전송</button>
+                </form>
+                </body>
+                </html>
+                """);
+        // ! servlet 으로 HTML 을 보내주려하면 상당히 불편하다
+
+    }
+}
+```
+
+- 저장 완료 페이지
+
+<img width="463" alt="스크린샷 2024-01-02 오전 2 10 07" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/26f07e5b-ddb0-4d18-a2c1-13e8367852fa">
+
+```java
+@WebServlet(name = "memberSaveServlet", urlPatterns = "/servlet/members/save")
+public class MemberSaveServlet extends HttpServlet {
+
+    MemberRepository memberRepository = MemberRepository.getInstance();
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get 의 Parameter, Post 의 Form data 이든 상관 없음
+        // 무조건 문자로 받음
+        String username = request.getParameter("username");
+        int age = Integer.parseInt(request.getParameter("age"));
+
+        Member member = new Member(username, age);
+        memberRepository.save(member);
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter writer = response.getWriter();
+        writer.write(
+                "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                " <meta charset=\"UTF-8\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "성공\n" +
+                "<ul>\n" +
+                "    <li>id="+member.getId()+"</li>\n" + // 동적으로 response 전송 가능
+                "    <li>username="+member.getUsername()+"</li>\n" + // 동적으로 response 전송 가능
+                "    <li>age="+member.getAge()+"</li>\n" + // 동적으로 response 전송 가능
+                "</ul>\n" +
+                "<a href=\"/index.html\">메인</a>\n" +
+                "</body>\n" +
+                "</html>");
+    }
+}
+```
+
+### 회원 정보 확인
+
+<img width="379" alt="스크린샷 2024-01-02 오전 2 27 56" src="https://github.com/snaag/study-spring-mvc-1/assets/42943992/c8af8663-9de1-45e4-a944-34788b771fae">
+
+```java
+@WebServlet(name = "memberListServlet", urlPatterns = "/servlet/members")
+public class MemberListServlet extends HttpServlet {
+
+    MemberRepository memberRepository = MemberRepository.getInstance();
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Member> members = memberRepository.findAll();
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+
+        PrintWriter writer = response.getWriter();
+        writer.write("<!DOCTYPE htm>\n");
+        writer.write("<html>\n");
+        writer.write("<head>\n");
+        writer.write("  <meta charset=\"utf-8\">\n");
+        writer.write("  <title>Title</title>\n");
+        writer.write("</head>\n");
+        writer.write("<body>\n");
+        writer.write("<a href=\"/index.html\">메인</a>\n");
+        writer.write("<table>\n");
+        writer.write("  <thead>\n");
+        writer.write("  <th>id</th>\n");
+        writer.write("  <th>username</th>\n");
+        writer.write("  <th>age</th>\n");
+        writer.write("  </thead>\n");
+        writer.write("  <tbody>\n");
+
+        for (Member member : members) {
+            writer.write("    <tr>\n");
+            writer.write("      <td>" + member.getId() + "\n");
+            writer.write("      <td>" + member.getUsername() + "\n");
+            writer.write("      <td>" + member.getAge() + "\n");
+            writer.write("    </tr>\n");
+        }
+
+        writer.write("  </tbody>\n");
+        writer.write("</table>\n");
+        writer.write("</body>\n");
+        writer.write("</html>\n");
+    }
+}
+
+```
